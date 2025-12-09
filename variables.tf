@@ -10,6 +10,20 @@ variable "name_b" {
   nullable    = false
 }
 
+variable "region_a" {
+  description = "The AWS region in which to create bucket A. If not provided, the provider region will be used."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
+variable "region_b" {
+  description = "The AWS region in which to create bucket B. If not provided, the provider region will be used."
+  type        = string
+  default     = null
+  nullable    = true
+}
+
 variable "mfa_delete_enabled_a" {
   description = "Whether MFA Delete should be enabled for the bucket A."
   type        = bool

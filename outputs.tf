@@ -9,6 +9,14 @@ output "name_b" {
   description = "The value of the `name_b` input variable"
   value       = var.name_b
 }
+output "region_a" {
+  description = "The value of the `region_a` input variable, or the Bucket A provider's region if the input was `null`."
+  value       = local.region_a
+}
+output "region_b" {
+  description = "The value of the `region_b` input variable, or the Bucket B provider's region if the input was `null`."
+  value       = local.region_b
+}
 output "mfa_delete_enabled_a" {
   description = "The value of the `mfa_delete_enabled_a` input variable, or the default value if the input was `null`."
   value       = var.mfa_delete_enabled_a

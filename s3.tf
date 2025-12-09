@@ -1,6 +1,6 @@
 module "bucket_a" {
   source  = "Invicton-Labs/secure-s3-bucket/aws"
-  version = "~>0.3.2"
+  version = "~>0.3.5"
   providers = {
     aws = aws.a
   }
@@ -8,6 +8,7 @@ module "bucket_a" {
     module.assert_same_account
   ]
   // Versioning always required for replication
+  region                        = local.region_a
   versioned                     = true
   name                          = var.name_a
   mfa_delete_enabled            = var.mfa_delete_enabled_a
@@ -43,7 +44,7 @@ locals {
     // Otherwise, check if a key was used for Bucket A (one provided, or new one created)
     var.kms_key_arn_a != null || var.create_new_kms_key_a ? (
       // If a key was used for bucket A, only create a replica for bucket B if B is in a different region
-      data.aws_region.a.name != data.aws_region.b.name
+      local.region_a != local.region_b
       ) : (
       // No key was used for bucket A, so we don't need a replica key for bucket B
       false
@@ -53,7 +54,7 @@ locals {
 
 module "bucket_b" {
   source  = "Invicton-Labs/secure-s3-bucket/aws"
-  version = "~>0.3.2"
+  version = "~>0.3.5"
   providers = {
     aws = aws.b
   }
@@ -61,6 +62,7 @@ module "bucket_b" {
     module.assert_same_account
   ]
   // Versioning always required for replication
+  region                        = local.region_b
   versioned                     = true
   name                          = var.name_b
   mfa_delete_enabled            = local.var_mfa_delete_enabled_b
@@ -88,7 +90,7 @@ module "bucket_b" {
 
 module "replication" {
   source  = "Invicton-Labs/secure-s3-bucket-replication/aws"
-  version = "~>0.2.2"
+  version = "~>0.2.3"
   providers = {
     aws.a = aws.a
     aws.b = aws.b
