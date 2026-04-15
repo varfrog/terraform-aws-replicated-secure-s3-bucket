@@ -343,6 +343,21 @@ variable "b_to_a_rules" {
   nullable = false
 }
 
+variable "blocked_encryption_types_a" {
+  description = "A list of encryption types to block for uploads to bucket A. Valid values are `NONE` (block unencrypted uploads) and `SSE-C` (block client-provided encryption key uploads). Defaults to `[\"NONE\"]` to match AWS's default behavior for new buckets."
+  type        = list(string)
+  default     = ["NONE"]
+  nullable    = false
+}
+variable "blocked_encryption_types_b" {
+  description = "A list of encryption types to block for uploads to bucket B. If not provided, will default to the value of `blocked_encryption_types_a`."
+  type        = list(string)
+  default     = null
+}
+locals {
+  var_blocked_encryption_types_b = var.blocked_encryption_types_b != null ? var.blocked_encryption_types_b : var.blocked_encryption_types_a
+}
+
 variable "cors_rules_a" {
   description = "A list of CORS rules to apply to bucket A."
   type = list(object({

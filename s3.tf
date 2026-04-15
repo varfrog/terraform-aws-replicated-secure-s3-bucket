@@ -29,6 +29,7 @@ module "bucket_a" {
   object_lock_enabled           = var.object_lock_enabled_a
   force_destroy                 = var.force_destroy_a
   force_allow_cloudtrail_digest = var.force_allow_cloudtrail_digest_a
+  blocked_encryption_types      = var.blocked_encryption_types_a
   cors_rules                    = var.cors_rules_a
   enable_shield_drt_access      = var.enable_shield_drt_access_a
   tags_s3_bucket                = var.tags_s3_bucket_a
@@ -83,6 +84,7 @@ module "bucket_b" {
   object_lock_enabled           = local.var_object_lock_enabled_b
   force_destroy                 = local.var_force_destroy_b
   force_allow_cloudtrail_digest = local.var_force_allow_cloudtrail_digest_b
+  blocked_encryption_types      = local.var_blocked_encryption_types_b
   cors_rules                    = local.var_cors_rules_b
   enable_shield_drt_access      = local.var_enable_shield_drt_access_b
   tags_s3_bucket                = var.tags_s3_bucket_b
